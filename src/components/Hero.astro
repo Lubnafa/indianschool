@@ -3,17 +3,19 @@
 // Elegant, minimal design with smooth scroll-driven animations
 ---
 
-<section class="hero-section relative h-screen overflow-hidden bg-gradient-to-r from-red-900 via-white to-white">
-  <!-- Gradient overlay -->
-  <div class="absolute inset-0 bg-gradient-to-r from-red-900 via-white to-white"></div>
-  
+<section class="hero-section relative h-screen min-h-[500px] max-h-[900px] overflow-hidden bg-ivory">
   <!-- Full-screen image background -->
   <div class="absolute inset-0 hero-visuals">
-    <img 
-      src="/images/hero.png" 
-      alt="Indian cultural dance and arts showcase"
-      class="w-full h-full object-cover hero-image"
-    />
+    <picture>
+      <source media="(max-width: 768px)" srcset="/images/hero-mobile.png">
+      <img
+        src="/images/hero.png"
+        alt="Indian cultural dance and arts showcase"
+        class="w-full h-full object-cover hero-image"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </picture>
   </div>
 
   <!-- Optional overlay for better text readability (if you want to add text later) -->
@@ -21,31 +23,31 @@
 
   <!-- Commented out text and buttons -->
   <!--
-  <div class="relative z-10 max-w-7xl mx-auto h-full px-8 flex items-center">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 w-full">
+  <div class="relative z-10 max-w-7xl mx-auto h-full px-4 sm:px-6 md:px-8 flex items-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 w-full">
       
       <div class="flex flex-col justify-center hero-text">
-        <h1 class="font-heading text-5xl md:text-6xl leading-tight text-charcoal">
+        <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight text-charcoal">
           Where Indian Art Becomes a Living Tradition
         </h1>
 
-        <p class="mt-6 text-lg text-ash max-w-md">
+        <p class="mt-4 sm:mt-6 text-base sm:text-lg text-ash max-w-md">
           Dance, music, and culture taught with discipline, grace, and purpose.
         </p>
 
-        <div class="mt-8 flex gap-4">
-          <button class="px-6 py-3 bg-saffron text-ivory rounded-full shadow-goldGlow hover:bg-vermilion transition">
+        <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-4">
+          <button class="px-6 py-3 bg-saffron text-ivory rounded-full shadow-goldGlow hover:bg-vermilion transition touch-manipulation">
             Learn More
           </button>
 
-          <button class="px-6 py-3 border border-saffron text-saffron rounded-full hover:bg-saffron hover:text-ivory transition">
+          <button class="px-6 py-3 border border-saffron text-saffron rounded-full hover:bg-saffron hover:text-ivory transition touch-manipulation">
             Explore Programs
           </button>
         </div>
       </div>
 
-      <div class="relative hero-visuals">
-        <div class="w-full h-[420px] rounded-2xl shadow-xl overflow-hidden hero-image">
+      <div class="relative hero-visuals hidden md:block">
+        <div class="w-full h-[300px] sm:h-[420px] rounded-2xl shadow-xl overflow-hidden hero-image">
           <video 
             class="w-full h-full object-cover"
             autoplay 
@@ -65,24 +67,6 @@
   -->
 </section>
 
-
-<script>
-  import { initHeroAnimations } from '../scripts/hero-animations.js';
-  
-  // Initialize animations after component mounts
-  // Astro handles client-side execution automatically
-  if (import.meta.env.SSR === false) {
-    // Wait for DOM to be fully ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(initHeroAnimations, 100);
-      });
-    } else {
-      setTimeout(initHeroAnimations, 100);
-    }
-  }
-</script>
-
 <style>
   /* Ensure hero section takes full viewport */
   .hero-section {
@@ -91,6 +75,7 @@
 
   /* Smooth transitions for hero images */
   .hero-image {
+    opacity: 1 !important;
     will-change: opacity, transform;
     transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -98,19 +83,13 @@
   /* Ensure visuals container is positioned correctly */
   .hero-visuals {
     will-change: transform;
+    opacity: 1 !important;
   }
 
   /* Text content positioning */
   .hero-text {
     position: relative;
     z-index: 10;
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .hero-visuals {
-      display: none;
-    }
   }
 </style>
 
