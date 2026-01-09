@@ -1,0 +1,251 @@
+---
+// PartnersMarquee.astro
+// Clean horizontal scrolling partner logos with pause on hover
+---
+
+<section class="partners-marquee bg-ivory py-20 md:py-28 overflow-hidden">
+  <div class="container mx-auto px-4 md:px-6">
+    <!-- Section Header -->
+    <div class="text-center mb-12 md:mb-16">
+      <p class="text-sm uppercase tracking-widest text-charcoal/60 mb-3 font-inter">
+        Our Partners
+      </p>
+      <h2 class="text-4xl md:text-5xl font-playfair text-charcoal mb-4">
+        Organizations We Collaborate With
+      </h2>
+      <p class="text-lg text-charcoal/70 font-inter max-w-2xl mx-auto">
+        Building meaningful partnerships to enrich cultural education
+      </p>
+    </div>
+
+    <!-- Marquee Container -->
+    <div class="marquee-wrapper relative" data-marquee-wrapper>
+      <div class="marquee-track flex items-center gap-16 md:gap-20" data-marquee-track>
+        <!-- First Set of Logos -->
+        <div class="logo-item flex-shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-105">
+          <img 
+            src="/images/GEF-Logo.jpg" 
+            alt="GEF partner logo"
+            class="h-16 md:h-20 w-auto object-contain opacity-70"
+          />
+        </div>
+
+        <div class="logo-item flex-shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-105">
+          <img 
+            src="/images/Gandharva.png" 
+            alt="Gandharva partner logo"
+            class="h-16 md:h-20 w-auto object-contain opacity-70"
+          />
+        </div>
+
+        <div class="logo-item flex-shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-105">
+          <img 
+            src="/images/dharmyog.png" 
+            alt="Dharmyog partner logo"
+            class="h-16 md:h-20 w-auto object-contain opacity-70"
+          />
+        </div>
+
+        <div class="logo-item flex-shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-105">
+          <img 
+            src="/images/PSS-logo.png" 
+            alt="PSS partner logo"
+            class="h-16 md:h-20 w-auto object-contain opacity-70"
+          />
+        </div>
+
+        <div class="logo-item flex-shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-105">
+          <img 
+            src="/images/reform.png" 
+            alt="Reform partner logo"
+            class="h-16 md:h-20 w-auto object-contain opacity-70"
+          />
+        </div>
+
+        <!-- Duplicate Set for Seamless Loop -->
+        <div class="logo-item flex-shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-105">
+          <img 
+            src="/images/GEF-Logo.jpg" 
+            alt="GEF partner logo"
+            class="h-16 md:h-20 w-auto object-contain opacity-70"
+          />
+        </div>
+
+        <div class="logo-item flex-shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-105">
+          <img 
+            src="/images/Gandharva.png" 
+            alt="Gandharva partner logo"
+            class="h-16 md:h-20 w-auto object-contain opacity-70"
+          />
+        </div>
+
+        <div class="logo-item flex-shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-105">
+          <img 
+            src="/images/dharmyog.png" 
+            alt="Dharmyog partner logo"
+            class="h-16 md:h-20 w-auto object-contain opacity-70"
+          />
+        </div>
+
+        <div class="logo-item flex-shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-105">
+          <img 
+            src="/images/PSS-logo.png" 
+            alt="PSS partner logo"
+            class="h-16 md:h-20 w-auto object-contain opacity-70"
+          />
+        </div>
+
+        <div class="logo-item flex-shrink-0 transition-all duration-300 hover:opacity-100 hover:scale-105">
+          <img 
+            src="/images/reform.png" 
+            alt="Reform partner logo"
+            class="h-16 md:h-20 w-auto object-contain opacity-70"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Scroll Hint -->
+    <p class="text-center text-sm text-charcoal/50 mt-8 md:hidden font-inter">
+      Swipe to view all partners
+    </p>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion) {
+    const marqueeWrapper = document.querySelector('[data-marquee-wrapper]') as HTMLElement;
+    const marqueeTrack = document.querySelector('[data-marquee-track]') as HTMLElement;
+
+    if (marqueeWrapper && marqueeTrack) {
+      // Calculate the width of one complete set of logos (5 logos)
+      const logos = marqueeTrack.querySelectorAll('.logo-item');
+      const firstLogo = logos[0] as HTMLElement;
+      
+      // Wait for images to load to get accurate width
+      const images = marqueeTrack.querySelectorAll('img');
+      let loadedCount = 0;
+      
+      const initAnimation = () => {
+        // Get total width of first set (5 logos + gaps)
+        let totalWidth = 0;
+        for (let i = 0; i < 5; i++) {
+          const logo = logos[i] as HTMLElement;
+          totalWidth += logo.offsetWidth;
+        }
+        // Add gap widths (4 gaps between 5 logos, each 64px on desktop, 80px on md)
+        const gapWidth = window.innerWidth >= 768 ? 80 : 64;
+        totalWidth += gapWidth * 4;
+
+        // Set initial position
+        gsap.set(marqueeTrack, { x: 0 });
+
+        // Create infinite scrolling animation
+        const animation = gsap.to(marqueeTrack, {
+          x: -totalWidth,
+          duration: 20, // 20 seconds for one complete loop
+          ease: 'none', // Linear movement for smooth constant speed
+          repeat: -1, // Infinite loop
+          onRepeat: () => {
+            // Reset to start position for seamless loop
+            gsap.set(marqueeTrack, { x: 0 });
+          }
+        });
+
+        // Pause on hover
+        marqueeWrapper.addEventListener('mouseenter', () => {
+          animation.pause();
+        });
+
+        // Resume on mouse leave
+        marqueeWrapper.addEventListener('mouseleave', () => {
+          animation.resume();
+        });
+      };
+
+      // Initialize after all images load
+      images.forEach((img) => {
+        if (img.complete) {
+          loadedCount++;
+          if (loadedCount === images.length) {
+            initAnimation();
+          }
+        } else {
+          img.addEventListener('load', () => {
+            loadedCount++;
+            if (loadedCount === images.length) {
+              initAnimation();
+            }
+          });
+        }
+      });
+
+      // Fallback: init after 500ms if images don't load
+      setTimeout(() => {
+        if (loadedCount < images.length) {
+          initAnimation();
+        }
+      }, 500);
+    }
+  } else {
+    // Fallback for reduced motion: enable horizontal scroll
+    const marqueeWrapper = document.querySelector('[data-marquee-wrapper]') as HTMLElement;
+    if (marqueeWrapper) {
+      marqueeWrapper.style.overflowX = 'auto';
+      marqueeWrapper.style.scrollSnapType = 'x mandatory';
+      
+      const logos = marqueeWrapper.querySelectorAll('.logo-item');
+      logos.forEach((logo) => {
+        (logo as HTMLElement).style.scrollSnapAlign = 'start';
+      });
+    }
+  }
+</script>
+
+<style>
+  /* Marquee wrapper */
+  .marquee-wrapper {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  /* Smooth transforms */
+  .marquee-track {
+    will-change: transform;
+  }
+
+  /* Logo items */
+  .logo-item {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Ensure images are crisp */
+  .logo-item img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  /* Mobile: horizontal scroll */
+  @media (max-width: 768px) {
+    .marquee-wrapper {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .marquee-wrapper::-webkit-scrollbar {
+      display: none; /* Chrome, Safari */
+    }
+
+    .logo-item {
+      scroll-snap-align: start;
+    }
+  }
+</style>

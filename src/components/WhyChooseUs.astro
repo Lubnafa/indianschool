@@ -1,0 +1,523 @@
+---
+// WhyChooseUs.astro
+// Floating cards section with ambient motion and cursor interaction
+---
+
+<section class="why-choose-us relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-ivory via-stone/20 to-peacock/10">
+  <!-- Fluid Canvas Layer (behind content) -->
+  <canvas 
+    id="fluid-canvas" 
+    class="absolute inset-0 pointer-events-none"
+    data-fluid-canvas
+  ></canvas>
+  
+  <div class="container mx-auto px-4 md:px-6 py-24 relative z-10">
+    <!-- Center Content -->
+    <div class="text-center mb-16 md:mb-0 z-10 relative" data-center-content>
+      <p class="text-sm uppercase tracking-widest text-charcoal/60 mb-4 font-inter">
+        Why Choose Us
+      </p>
+      <h2 class="text-5xl md:text-6xl lg:text-7xl font-playfair text-charcoal leading-tight">
+        Complete Creative<br />Growth
+      </h2>
+    </div>
+
+    <!-- Floating Cards Container (Desktop) -->
+    <div class="hidden md:block relative" style="height: 600px;" data-cards-container>
+      <!-- Card 1: Expert Instruction -->
+      <div 
+        class="floating-card absolute top-12 left-[10%] w-64 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+        data-float-card
+        data-float-delay="0"
+      >
+        <div class="w-12 h-12 bg-gradient-to-br from-saffron to-vermilion rounded-xl mb-4 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-playfair text-charcoal mb-2">Expert Instruction</h3>
+        <p class="text-sm text-charcoal/70 font-inter">Learn from masters with decades of experience</p>
+      </div>
+
+      <!-- Card 2: Cultural Authenticity -->
+      <div 
+        class="floating-card absolute top-32 right-[8%] w-64 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+        data-float-card
+        data-float-delay="0.5"
+      >
+        <div class="w-12 h-12 bg-gradient-to-br from-peacock to-lotus rounded-xl mb-4 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-playfair text-charcoal mb-2">Cultural Authenticity</h3>
+        <p class="text-sm text-charcoal/70 font-inter">Rooted in traditional Indian arts and values</p>
+      </div>
+
+      <!-- Card 3: Personalized Learning -->
+      <div 
+        class="floating-card absolute bottom-32 left-[15%] w-64 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+        data-float-card
+        data-float-delay="1"
+      >
+        <div class="w-12 h-12 bg-gradient-to-br from-vermilion to-saffron rounded-xl mb-4 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-playfair text-charcoal mb-2">Personalized Learning</h3>
+        <p class="text-sm text-charcoal/70 font-inter">Tailored guidance for every student's journey</p>
+      </div>
+
+      <!-- Card 4: Community Focus -->
+      <div 
+        class="floating-card absolute bottom-20 right-[12%] w-64 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+        data-float-card
+        data-float-delay="1.5"
+      >
+        <div class="w-12 h-12 bg-gradient-to-br from-lotus to-peacock rounded-xl mb-4 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-playfair text-charcoal mb-2">Community Focus</h3>
+        <p class="text-sm text-charcoal/70 font-inter">Building connections through shared creativity</p>
+      </div>
+
+      <!-- Card 5: Holistic Development -->
+      <div 
+        class="floating-card absolute top-[45%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-64 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 md:hidden lg:block"
+        data-float-card
+        data-float-delay="2"
+      >
+        <div class="w-12 h-12 bg-gradient-to-br from-saffron to-peacock rounded-xl mb-4 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-playfair text-charcoal mb-2">Holistic Development</h3>
+        <p class="text-sm text-charcoal/70 font-inter">Nurturing mind, body, and spirit together</p>
+      </div>
+    </div>
+
+    <!-- Mobile Cards Grid -->
+    <div class="md:hidden grid grid-cols-1 gap-6 mt-12">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <div class="w-12 h-12 bg-gradient-to-br from-saffron to-vermilion rounded-xl mb-4 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-playfair text-charcoal mb-2">Expert Instruction</h3>
+        <p class="text-sm text-charcoal/70 font-inter">Learn from masters with decades of experience</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <div class="w-12 h-12 bg-gradient-to-br from-peacock to-lotus rounded-xl mb-4 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-playfair text-charcoal mb-2">Cultural Authenticity</h3>
+        <p class="text-sm text-charcoal/70 font-inter">Rooted in traditional Indian arts and values</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <div class="w-12 h-12 bg-gradient-to-br from-vermilion to-saffron rounded-xl mb-4 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-playfair text-charcoal mb-2">Personalized Learning</h3>
+        <p class="text-sm text-charcoal/70 font-inter">Tailored guidance for every student's journey</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <div class="w-12 h-12 bg-gradient-to-br from-lotus to-peacock rounded-xl mb-4 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-playfair text-charcoal mb-2">Community Focus</h3>
+        <p class="text-sm text-charcoal/70 font-inter">Building connections through shared creativity</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <div class="w-12 h-12 bg-gradient-to-br from-saffron to-peacock rounded-xl mb-4 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-playfair text-charcoal mb-2">Holistic Development</h3>
+        <p class="text-sm text-charcoal/70 font-inter">Nurturing mind, body, and spirit together</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Only run animations on desktop and if motion is allowed
+  const isDesktop = window.innerWidth >= 768;
+
+  if (!prefersReducedMotion && isDesktop) {
+    const centerContent = document.querySelector('[data-center-content]') as HTMLElement;
+    const cardsContainer = document.querySelector('[data-cards-container]') as HTMLElement;
+    const floatingCards = document.querySelectorAll('[data-float-card]') as NodeListOf<HTMLElement>;
+
+    if (centerContent && cardsContainer && floatingCards.length > 0) {
+      // Initial state: hide elements
+      gsap.set(centerContent, { opacity: 0, scale: 0.95 });
+      gsap.set(floatingCards, { opacity: 0, y: 30 });
+
+      // Entrance animation timeline
+      const entranceTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.why-choose-us',
+          start: 'top 60%',
+          once: true,
+        }
+      });
+
+      // Center content fades and scales in
+      entranceTl.to(centerContent, {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: 'power2.out',
+      });
+
+      // Cards fade in with stagger
+      entranceTl.to(floatingCards, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power2.out',
+      }, '-=0.5');
+
+      // Continuous floating animation for each card
+      floatingCards.forEach((card, index) => {
+        const delay = parseFloat(card.getAttribute('data-float-delay') || '0');
+        
+        // Subtle up and down float with yoyo
+        gsap.to(card, {
+          y: '+=12',
+          duration: 3 + (index * 0.3), // Vary duration for organic feel
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1,
+          delay: delay,
+        });
+
+        // Slight rotation for added depth
+        gsap.to(card, {
+          rotation: index % 2 === 0 ? 1 : -1,
+          duration: 4 + (index * 0.2),
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1,
+          delay: delay + 0.5,
+        });
+      });
+
+      // Cursor interaction: cards subtly follow cursor
+      let mouseX = 0;
+      let mouseY = 0;
+
+      cardsContainer.addEventListener('mousemove', (e) => {
+        const rect = cardsContainer.getBoundingClientRect();
+        mouseX = (e.clientX - rect.left - rect.width / 2) / rect.width;
+        mouseY = (e.clientY - rect.top - rect.height / 2) / rect.height;
+
+        floatingCards.forEach((card, index) => {
+          // Calculate distance-based influence
+          const cardRect = card.getBoundingClientRect();
+          const cardCenterX = cardRect.left + cardRect.width / 2 - rect.left;
+          const cardCenterY = cardRect.top + cardRect.height / 2 - rect.top;
+          
+          const distanceX = (e.clientX - rect.left) - cardCenterX;
+          const distanceY = (e.clientY - rect.top) - cardCenterY;
+          
+          // Dampen movement based on distance (closer = more movement)
+          const maxDistance = 300;
+          const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+          const influence = Math.max(0, 1 - distance / maxDistance);
+          
+          // Apply subtle movement toward cursor
+          gsap.to(card, {
+            x: distanceX * influence * 0.08, // Very subtle movement
+            duration: 0.8,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        });
+      });
+
+      // Reset position when mouse leaves
+      cardsContainer.addEventListener('mouseleave', () => {
+        floatingCards.forEach((card) => {
+          gsap.to(card, {
+            x: 0,
+            duration: 1,
+            ease: 'power2.out',
+          });
+        });
+      });
+    }
+  } else if (!prefersReducedMotion && !isDesktop) {
+    // Mobile: simple fade in only
+    const centerContent = document.querySelector('[data-center-content]') as HTMLElement;
+    
+    if (centerContent) {
+      gsap.set(centerContent, { opacity: 0, y: 20 });
+      
+      gsap.to(centerContent, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.why-choose-us',
+          start: 'top 70%',
+          once: true,
+        }
+      });
+    }
+  } else {
+    // Reduced motion: ensure everything is visible
+    const centerContent = document.querySelector('[data-center-content]') as HTMLElement;
+    const floatingCards = document.querySelectorAll('[data-float-card]') as NodeListOf<HTMLElement>;
+    
+    if (centerContent) gsap.set(centerContent, { opacity: 1, scale: 1 });
+    if (floatingCards.length > 0) gsap.set(floatingCards, { opacity: 1, y: 0 });
+  }
+
+  // Fluid Canvas Interaction
+  // Only on desktop, with motion enabled
+  if (!prefersReducedMotion && isDesktop) {
+    const canvas = document.getElementById('fluid-canvas') as HTMLCanvasElement;
+    const section = document.querySelector('.why-choose-us') as HTMLElement;
+
+    if (canvas && section) {
+      const ctx = canvas.getContext('2d');
+      
+      // Only proceed if we have a valid 2D context
+      if (ctx) {
+        // Canvas setup
+        const resizeCanvas = () => {
+          canvas.width = section.offsetWidth;
+          canvas.height = section.offsetHeight;
+        };
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Fluid trail system
+        interface FluidPoint {
+          x: number;
+          y: number;
+          vx: number;
+          vy: number;
+          life: number;
+          maxLife: number;
+          size: number;
+          hue: number;
+        }
+
+        const trails: FluidPoint[] = [];
+        let mouseX = 0;
+        let mouseY = 0;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+        let isActive = false;
+        let animationId: number | null = null;
+
+        // Color palette (saffron, peacock, lotus with very low opacity)
+        const colors = [
+          { h: 35, s: 90, l: 55 },   // Saffron
+          { h: 195, s: 70, l: 50 },  // Peacock
+          { h: 330, s: 60, l: 60 },  // Lotus
+        ];
+
+        // Track mouse movement
+        section.addEventListener('mouseenter', () => {
+          isActive = true;
+          startAnimation();
+        });
+
+        section.addEventListener('mouseleave', () => {
+          isActive = false;
+        });
+
+        section.addEventListener('mousemove', (e) => {
+          const rect = section.getBoundingClientRect();
+          mouseX = e.clientX - rect.left;
+          mouseY = e.clientY - rect.top;
+        });
+
+        // Create fluid trail points based on cursor velocity
+        const createTrail = () => {
+          if (!isActive) return;
+
+          // Calculate velocity
+          const vx = mouseX - lastMouseX;
+          const vy = mouseY - lastMouseY;
+          const velocity = Math.sqrt(vx * vx + vy * vy);
+
+          // Only create trails when moving (not idle)
+          if (velocity > 0.5) {
+            // Clamp intensity - don't create too many points
+            const numPoints = Math.min(Math.floor(velocity / 3), 3);
+
+            for (let i = 0; i < numPoints; i++) {
+              const randomColor = colors[Math.floor(Math.random() * colors.length)];
+              
+              trails.push({
+                x: mouseX + (Math.random() - 0.5) * 10,
+                y: mouseY + (Math.random() - 0.5) * 10,
+                vx: vx * 0.1 + (Math.random() - 0.5) * 2,
+                vy: vy * 0.1 + (Math.random() - 0.5) * 2,
+                life: 1,
+                maxLife: 60 + Math.random() * 40, // 60-100 frames
+                size: 2 + Math.random() * 3,
+                hue: randomColor.h + (Math.random() - 0.5) * 20,
+              });
+            }
+          }
+
+          lastMouseX = mouseX;
+          lastMouseY = mouseY;
+        };
+
+        // Render fluid trails
+        const render = () => {
+          // Slow alpha fade instead of full clear (creates trailing effect)
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // Update and draw trails
+          for (let i = trails.length - 1; i >= 0; i--) {
+            const trail = trails[i];
+
+            // Update position with viscous damping
+            trail.x += trail.vx;
+            trail.y += trail.vy;
+            trail.vx *= 0.95; // Viscous drag
+            trail.vy *= 0.95;
+
+            // Age the trail
+            trail.life -= 1 / trail.maxLife;
+
+            // Remove dead trails
+            if (trail.life <= 0) {
+              trails.splice(i, 1);
+              continue;
+            }
+
+            // Draw soft flowing curves
+            const alpha = trail.life * 0.15; // Very low opacity (max 15%)
+            const size = trail.size * trail.life;
+
+            // Create gradient for soft edges
+            const gradient = ctx.createRadialGradient(
+              trail.x, trail.y, 0,
+              trail.x, trail.y, size * 4
+            );
+            gradient.addColorStop(0, `hsla(${trail.hue}, 70%, 60%, ${alpha})`);
+            gradient.addColorStop(0.5, `hsla(${trail.hue}, 70%, 60%, ${alpha * 0.5})`);
+            gradient.addColorStop(1, `hsla(${trail.hue}, 70%, 60%, 0)`);
+
+            // Draw soft blob
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(trail.x, trail.y, size * 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Connect trails with flowing curves (organic feel)
+            if (i > 0 && trails.length > 1) {
+              const prevTrail = trails[i - 1];
+              const distance = Math.sqrt(
+                (trail.x - prevTrail.x) ** 2 + (trail.y - prevTrail.y) ** 2
+              );
+
+              // Only connect nearby trails
+              if (distance < 80) {
+                ctx.strokeStyle = `hsla(${trail.hue}, 70%, 60%, ${alpha * 0.3})`;
+                ctx.lineWidth = size * 0.5;
+                ctx.lineCap = 'round';
+                
+                ctx.beginPath();
+                ctx.moveTo(prevTrail.x, prevTrail.y);
+                
+                // Use quadratic curve for smooth organic flow
+                const cpX = (trail.x + prevTrail.x) / 2 + (Math.random() - 0.5) * 20;
+                const cpY = (trail.y + prevTrail.y) / 2 + (Math.random() - 0.5) * 20;
+                ctx.quadraticCurveTo(cpX, cpY, trail.x, trail.y);
+                
+                ctx.stroke();
+              }
+            }
+          }
+        };
+
+        // Animation loop (only runs when active)
+        const animate = () => {
+          createTrail();
+          render();
+
+          if (isActive || trails.length > 0) {
+            animationId = requestAnimationFrame(animate);
+          } else {
+            animationId = null;
+          }
+        };
+
+        const startAnimation = () => {
+          if (animationId === null) {
+            animate();
+          }
+        };
+
+        // Cleanup on unmount
+        const cleanup = () => {
+          if (animationId !== null) {
+            cancelAnimationFrame(animationId);
+          }
+          window.removeEventListener('resize', resizeCanvas);
+        };
+
+        // Store cleanup function for potential use
+        (window as any).__fluidCanvasCleanup = cleanup;
+      }
+    }
+  }
+
+</script>
+
+<style>
+  /* Ensure smooth rendering */
+  .floating-card {
+    will-change: transform;
+  }
+
+  /* Prevent layout shift during animation */
+  [data-center-content] {
+    will-change: opacity, transform;
+  }
+
+  /* Smooth gradient background */
+  .why-choose-us {
+    background-image: linear-gradient(135deg, 
+      theme('colors.ivory') 0%, 
+      rgba(231, 229, 228, 0.3) 50%, 
+      rgba(14, 165, 233, 0.1) 100%
+    );
+  }
+</style>

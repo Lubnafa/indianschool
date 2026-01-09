@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import AboutSection from '../components/AboutSection.astro';
+import ClassesMarquee from '../components/ClassesMarquee.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
+import PartnersMarquee from '../components/PartnersMarquee.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<Layout>
+  <Header />
+  <Hero />
+  <AboutSection />
+  <ClassesMarquee />
+  <WhyChooseUs />
+  <PartnersMarquee />
+  <Footer />
+</Layout>
+
+<script>
+  import { initAboutAnimations } from '../scripts/aboutAnimations.js';
+  
+  // Initialize About section animations after DOM is ready
+  if (import.meta.env.SSR === false) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initAboutAnimations, 100);
+      });
+    } else {
+      setTimeout(initAboutAnimations, 100);
+    }
+  }
+</script>
+

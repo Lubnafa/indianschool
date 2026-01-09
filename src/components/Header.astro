@@ -1,0 +1,83 @@
+---
+// Header component with clean, professional navbar structure
+// Transparent on top, white background on scroll
+---
+
+<header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out">
+  <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    
+    <!-- Left: Logo -->
+    <div class="flex items-center gap-2">
+      <img 
+        src="/images/iis-logo-new.png" 
+        alt="Indian School Logo" 
+        class="h-8 w-auto object-contain"
+        loading="eager"
+      />
+    </div>
+
+    <!-- Right: Nav Links -->
+    <ul class="hidden md:flex items-center gap-8 text-sm">
+      <li>
+        <a href="#about" class="nav-link transition-colors duration-200">About</a>
+      </li>
+      <li>
+        <a href="#programs" class="nav-link transition-colors duration-200">Programs</a>
+      </li>
+      <li>
+        <a href="#contact" class="nav-link transition-colors duration-200">Contact</a>
+      </li>
+    </ul>
+
+  </nav>
+</header>
+
+<script>
+  // Add scroll listener to change header background
+  if (typeof window !== 'undefined') {
+    const header = document.getElementById('main-header');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    function updateHeaderOnScroll() {
+      if (window.scrollY > 50) {
+        // Scrolled - add white background
+        header?.classList.add('bg-ivory/95', 'backdrop-blur-md', 'border-b', 'border-stone');
+        header?.classList.remove('bg-transparent');
+        
+        // Change text color to dark
+        navLinks.forEach(link => {
+          link.classList.remove('text-ivory', 'hover:text-ivory/80');
+          link.classList.add('text-ash', 'hover:text-charcoal');
+        });
+      } else {
+        // At top - transparent background
+        header?.classList.remove('bg-ivory/95', 'backdrop-blur-md', 'border-b', 'border-stone');
+        header?.classList.add('bg-transparent');
+        
+        // Change text color to light
+        navLinks.forEach(link => {
+          link.classList.remove('text-ash', 'hover:text-charcoal');
+          link.classList.add('text-ivory', 'hover:text-ivory/80');
+        });
+      }
+    }
+    
+    // Run on load
+    updateHeaderOnScroll();
+    
+    // Run on scroll
+    window.addEventListener('scroll', updateHeaderOnScroll, { passive: true });
+  }
+</script>
+
+<style>
+  /* Initial state for nav links - white text for transparent header */
+  .nav-link {
+    color: #FAF7F2; /* ivory */
+  }
+  
+  .nav-link:hover {
+    color: rgba(250, 247, 242, 0.8); /* ivory/80 */
+  }
+</style>
+

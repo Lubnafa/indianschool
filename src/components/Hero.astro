@@ -1,0 +1,116 @@
+---
+// Hero Section Component
+// Elegant, minimal design with smooth scroll-driven animations
+---
+
+<section class="hero-section relative h-screen overflow-hidden bg-gradient-to-r from-red-900 via-white to-white">
+  <!-- Gradient overlay -->
+  <div class="absolute inset-0 bg-gradient-to-r from-red-900 via-white to-white"></div>
+  
+  <!-- Full-screen image background -->
+  <div class="absolute inset-0 hero-visuals">
+    <img 
+      src="/images/hero.png" 
+      alt="Indian cultural dance and arts showcase"
+      class="w-full h-full object-cover hero-image"
+    />
+  </div>
+
+  <!-- Optional overlay for better text readability (if you want to add text later) -->
+  <!-- <div class="absolute inset-0 bg-charcoal/20"></div> -->
+
+  <!-- Commented out text and buttons -->
+  <!--
+  <div class="relative z-10 max-w-7xl mx-auto h-full px-8 flex items-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 w-full">
+      
+      <div class="flex flex-col justify-center hero-text">
+        <h1 class="font-heading text-5xl md:text-6xl leading-tight text-charcoal">
+          Where Indian Art Becomes a Living Tradition
+        </h1>
+
+        <p class="mt-6 text-lg text-ash max-w-md">
+          Dance, music, and culture taught with discipline, grace, and purpose.
+        </p>
+
+        <div class="mt-8 flex gap-4">
+          <button class="px-6 py-3 bg-saffron text-ivory rounded-full shadow-goldGlow hover:bg-vermilion transition">
+            Learn More
+          </button>
+
+          <button class="px-6 py-3 border border-saffron text-saffron rounded-full hover:bg-saffron hover:text-ivory transition">
+            Explore Programs
+          </button>
+        </div>
+      </div>
+
+      <div class="relative hero-visuals">
+        <div class="w-full h-[420px] rounded-2xl shadow-xl overflow-hidden hero-image">
+          <video 
+            class="w-full h-full object-cover"
+            autoplay 
+            loop 
+            muted 
+            playsinline
+            poster=""
+          >
+            <source src="/images/Brown Kuchipudi Dance YouTube Thumbnail.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  -->
+</section>
+
+
+<script>
+  import { initHeroAnimations } from '../scripts/hero-animations.js';
+  
+  // Initialize animations after component mounts
+  // Astro handles client-side execution automatically
+  if (import.meta.env.SSR === false) {
+    // Wait for DOM to be fully ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initHeroAnimations, 100);
+      });
+    } else {
+      setTimeout(initHeroAnimations, 100);
+    }
+  }
+</script>
+
+<style>
+  /* Ensure hero section takes full viewport */
+  .hero-section {
+    position: relative;
+  }
+
+  /* Smooth transitions for hero images */
+  .hero-image {
+    will-change: opacity, transform;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Ensure visuals container is positioned correctly */
+  .hero-visuals {
+    will-change: transform;
+  }
+
+  /* Text content positioning */
+  .hero-text {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hero-visuals {
+      display: none;
+    }
+  }
+</style>
+

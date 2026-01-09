@@ -1,0 +1,78 @@
+---
+/**
+ * About Section Component
+ * Premium, calm layout with center image and left/right content blocks
+ * Designed for smooth GSAP scroll-triggered animations
+ */
+---
+
+<section class="about-section relative bg-ivory py-24 md:py-32 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 md:px-8">
+    
+    <!-- Desktop: 3-column grid, Mobile: stacked -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 items-center">
+      
+      <!-- Left Content Block -->
+      <div class="about-left opacity-0 translate-y-8 lg:text-right space-y-4">
+        <div class="inline-block">
+          <span class="text-xs uppercase tracking-widest text-saffron font-medium">
+            About Us
+          </span>
+        </div>
+        
+        <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl leading-tight text-charcoal">
+          Education Rooted in Indian Philosophy
+        </h2>
+        
+        <p class="text-ash text-base md:text-lg leading-relaxed max-w-md lg:ml-auto">
+          We believe that art is not just performance—it is a discipline that shapes character, 
+          cultivates grace, and connects us to our heritage.
+        </p>
+      </div>
+
+      <!-- Center Visual -->
+      <div class="about-center opacity-0 scale-95 flex justify-center lg:order-none order-first lg:order-none">
+        <div class="relative">
+          <img 
+            src="/images/nataraj.png" 
+            alt="Indian classical dance representation" 
+            class="w-64 md:w-80 lg:w-[340px] h-auto object-contain"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <!-- Right Content Block -->
+      <div class="about-right opacity-0 translate-y-8 space-y-4">
+        <p class="text-ash text-base md:text-lg leading-relaxed max-w-md">
+          Through classical Indian dance, music, and cultural studies, we nurture students 
+          who carry forward traditions with authenticity, respect, and purpose.
+        </p>
+        
+        <p class="text-sm text-ash/70 italic">
+          Where tradition meets discipline, and art becomes a way of life.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Ensure smooth transitions */
+  .about-left,
+  .about-center,
+  .about-right {
+    will-change: opacity, transform;
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .about-left,
+    .about-center,
+    .about-right {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
