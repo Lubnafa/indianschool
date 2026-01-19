@@ -1,0 +1,91 @@
+---
+const logos = [
+  { src: "/images/GEF-Logo.jpg", alt: "GEF partner logo" },
+  { src: "/images/Gandharva.png", alt: "Gandharva partner logo" },
+  { src: "/images/dharmyog.png", alt: "Dharmyog partner logo" },
+  { src: "/images/PSS-logo.png", alt: "PSS partner logo" },
+  { src: "/images/reform.png", alt: "Reform partner logo" }
+];
+---
+
+<section class="logo-marquee bg-ivory py-20 md:py-28 overflow-hidden">
+  <div class="w-full px-4 md:px-6">
+    <div class="marquee-wrapper">
+      <div class="marquee-track">
+        {logos.map((logo) => (
+          <div class="logo-item flex-shrink-0">
+            <img 
+              src={logo.src} 
+              alt={logo.alt}
+              class="h-16 md:h-20 w-auto object-contain opacity-70"
+            />
+          </div>
+        ))}
+        {logos.map((logo, index) => (
+          <div class="logo-item flex-shrink-0" aria-hidden="true">
+            <img 
+              src={logo.src} 
+              alt=""
+              class="h-16 md:h-20 w-auto object-contain opacity-70"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee-wrapper {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    width: max-content;
+    will-change: transform;
+    animation: scroll-left 25s linear infinite;
+  }
+
+  @media (min-width: 768px) {
+    .marquee-track {
+      gap: 5rem;
+    }
+  }
+
+  .marquee-wrapper:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .logo-item {
+    user-select: none;
+    -webkit-user-select: none;
+    flex-shrink: 0;
+  }
+
+  .logo-item img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    max-width: none;
+  }
+
+  @keyframes scroll-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+</style>

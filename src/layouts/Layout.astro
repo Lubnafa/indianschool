@@ -24,6 +24,13 @@ const { title = "Indian School - Where Indian Art Becomes a Living Tradition", d
     <slot />
     
     <script>
+      // Initialize scroll animations system
+      if (typeof window !== 'undefined') {
+        import('../scripts/scrollAnimations.js').then((module) => {
+          module.initScrollAnimationsSystem();
+        });
+      }
+      
       // Smooth scrolling for iOS and Android devices
       if (typeof window !== 'undefined') {
         import('lenis').then((LenisModule) => {

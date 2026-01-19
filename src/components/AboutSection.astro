@@ -13,7 +13,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-16 items-center">
       
       <!-- Left Content Block -->
-      <div class="about-left opacity-0 translate-y-8 lg:text-right space-y-3 sm:space-y-4">
+      <div class="about-left scroll-animate fade-in-left lg:text-right space-y-3 sm:space-y-4">
         <div class="inline-block">
           <span class="text-xs uppercase tracking-widest text-saffron font-medium">
             About Us
@@ -31,7 +31,7 @@
       </div>
 
       <!-- Center Visual -->
-      <div class="about-center opacity-0 scale-95 flex justify-center lg:order-none order-first lg:order-none">
+      <div class="about-center scroll-animate scale-in flex justify-center lg:order-none order-first lg:order-none">
         <div class="relative">
           <img 
             src="/images/nataraj.png" 
@@ -43,7 +43,7 @@
       </div>
 
       <!-- Right Content Block -->
-      <div class="about-right opacity-0 translate-y-8 space-y-3 sm:space-y-4">
+      <div class="about-right scroll-animate fade-in-right space-y-3 sm:space-y-4">
         <p class="text-ash text-sm sm:text-base md:text-lg leading-relaxed max-w-md">
           Through classical Indian dance, music, and cultural studies, we nurture students 
           who carry forward traditions with authenticity, respect, and purpose.
@@ -70,9 +70,15 @@
   @media (prefers-reduced-motion: reduce) {
     .about-left,
     .about-center,
-    .about-right {
+    .about-right,
+    .scroll-animate {
       opacity: 1 !important;
       transform: none !important;
+      animation: none !important;
+    }
+    
+    .scroll-animate.revealed {
+      opacity: 1 !important;
     }
   }
 </style>

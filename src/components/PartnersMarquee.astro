@@ -109,24 +109,45 @@
 </section>
 
 <script>
+  // #region agent log
+  fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:112',message:'Script started',data:{windowDefined:typeof window!=='undefined',readyState:typeof document!=='undefined'?document.readyState:'N/A'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'5,6'})}).catch(()=>{});
+  // #endregion
   import { gsap } from 'gsap';
 
   // Wait for DOM to be ready
   if (typeof window !== 'undefined') {
+    // #region agent log
+    fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:115',message:'GSAP import check',data:{gsapAvailable:typeof gsap!=='undefined',gsapSet:typeof gsap?.set==='function',gsapTicker:typeof gsap?.ticker==='object'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'2'})}).catch(()=>{});
+    // #endregion
     const initMarquee = (isRetry = false) => {
+      // #region agent log
+      fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:117',message:'initMarquee called',data:{isRetry,readyState:document.readyState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'5'})}).catch(()=>{});
+      // #endregion
       // Check for reduced motion preference
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // #region agent log
+      fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:119',message:'Reduced motion check',data:{prefersReducedMotion},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'4'})}).catch(()=>{});
+      // #endregion
 
       if (!prefersReducedMotion) {
         const marqueeWrapper = document.querySelector('[data-marquee-wrapper]') as HTMLElement;
-        const marqueeTrack = document.querySelector('[data-marquee-track]') as HTMLElement;
+        const marqueeTrack = marqueeWrapper?.querySelector('[data-marquee-track]') as HTMLElement;
+        // #region agent log
+        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:122',message:'QuerySelector results',data:{wrapperFound:!!marqueeWrapper,trackFound:!!marqueeTrack},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'1'})}).catch(()=>{});
+        // #endregion
 
         if (!marqueeWrapper || !marqueeTrack) {
+          // #region agent log
+          fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:125',message:'Early return - elements not found',data:{wrapperFound:!!marqueeWrapper,trackFound:!!marqueeTrack},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'1'})}).catch(()=>{});
+          // #endregion
           return;
         }
 
         // Calculate the width of one complete set of logos (5 logos)
         const logos = marqueeTrack.querySelectorAll('.logo-item');
+        // #region agent log
+        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:147',message:'Logo query results - POST-FIX',data:{logoCount:logos.length,isRetry,firstLogoClass:logos[0]?.className||'none',trackChildrenCount:marqueeTrack.children.length},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'6'})}).catch(()=>{});
+        // #endregion
         
         if (logos.length === 0) {
           // Only warn and retry once if this is the first attempt
@@ -138,15 +159,24 @@
           } else if (import.meta.env.DEV) {
             console.warn('No logo items found in marquee track. Marquee animation disabled.');
           }
+          // #region agent log
+          fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:142',message:'No logos found - returning',data:{logoCount:logos.length,isRetry},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'6'})}).catch(()=>{});
+          // #endregion
           return;
         }
         
         // Wait for images to load to get accurate width
         const images = marqueeTrack.querySelectorAll('img');
+        // #region agent log
+        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:145',message:'Images found',data:{imageCount:images.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'3'})}).catch(()=>{});
+        // #endregion
         let loadedCount = 0;
         let animationInitialized = false;
         
         const initAnimation = () => {
+          // #region agent log
+          fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:150',message:'initAnimation called',data:{animationInitialized,logoCount:logos.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'3,7'})}).catch(()=>{});
+          // #endregion
           // Prevent multiple initializations
           if (animationInitialized) return;
           
@@ -160,16 +190,23 @@
 
         // Get total width of first set (5 logos + gaps)
         let totalWidth = 0;
+        const logoWidths: number[] = [];
         for (let i = 0; i < 5; i++) {
           const logo = logos[i] as HTMLElement;
           if (!logo || !logo.offsetWidth) {
             console.warn(`Logo at index ${i} is not available or has no width`);
             // Use a fallback width if element doesn't exist
             totalWidth += 100; // fallback width
+            logoWidths.push(100);
           } else {
             totalWidth += logo.offsetWidth;
+            logoWidths.push(logo.offsetWidth);
           }
         }
+        
+        // #region agent log
+        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:172',message:'Width calculation',data:{totalWidthBeforeGaps:totalWidth,logoWidths,windowWidth:window.innerWidth},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'7'})}).catch(()=>{});
+        // #endregion
         
         // If totalWidth is 0, something went wrong, use fallback
         if (totalWidth === 0) {
@@ -179,9 +216,15 @@
         // Add gap widths (4 gaps between 5 logos, each 64px on desktop, 80px on md)
         const gapWidth = window.innerWidth >= 768 ? 80 : 64;
         totalWidth += gapWidth * 4;
+        // #region agent log
+        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:181',message:'Final width calculation',data:{totalWidth,gapWidth,gapCount:4},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'7'})}).catch(()=>{});
+        // #endregion
 
         // Set initial position
         gsap.set(marqueeTrack, { x: 0 });
+        // #region agent log
+        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:184',message:'GSAP set initial position',data:{success:true},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'2'})}).catch(()=>{});
+        // #endregion
 
         // Animation state
         let currentX = 0;
@@ -204,6 +247,9 @@
             gsap.set(marqueeTrack, { x: currentX });
           }
         });
+        // #region agent log
+        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:206',message:'Animation ticker added',data:{speed,totalWidth,animationCreated:!!animation},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'2,7'})}).catch(()=>{});
+        // #endregion
 
         // Pause on hover (desktop only)
         if (window.innerWidth >= 768) {
@@ -238,17 +284,26 @@
         // Initialize after all images load
         if (images.length === 0) {
           // No images, initialize immediately
+          // #region agent log
+          fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:240',message:'No images - initializing immediately',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'3'})}).catch(()=>{});
+          // #endregion
           initAnimation();
         } else {
-          images.forEach((img) => {
+          images.forEach((img, idx) => {
             if (img.complete && img.naturalWidth > 0) {
               loadedCount++;
+              // #region agent log
+              fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:245',message:'Image already loaded',data:{index:idx,loadedCount,imageCount:images.length,src:img.src},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'3'})}).catch(()=>{});
+              // #endregion
               if (loadedCount === images.length && !animationInitialized) {
                 initAnimation();
               }
             } else {
               img.addEventListener('load', () => {
                 loadedCount++;
+                // #region agent log
+                fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:252',message:'Image load event',data:{index:idx,loadedCount,imageCount:images.length,src:img.src},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'3'})}).catch(()=>{});
+                // #endregion
                 if (loadedCount === images.length && !animationInitialized) {
                   initAnimation();
                 }
@@ -256,6 +311,9 @@
               // Handle error case
               img.addEventListener('error', () => {
                 loadedCount++;
+                // #region agent log
+                fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:259',message:'Image error event',data:{index:idx,loadedCount,imageCount:images.length,src:img.src},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'3'})}).catch(()=>{});
+                // #endregion
                 if (loadedCount === images.length && !animationInitialized) {
                   initAnimation();
                 }
@@ -266,13 +324,17 @@
           // Fallback: init after 1 second if images don't load
           setTimeout(() => {
             if (!animationInitialized) {
+              // #region agent log
+              fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:270',message:'Fallback timeout - initializing',data:{loadedCount,imageCount:images.length,animationInitialized},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'3'})}).catch(()=>{});
+              // #endregion
               initAnimation();
             }
           }, 1000);
         }
       } else {
           // Fallback for reduced motion: show static logos
-          const marqueeTrack = document.querySelector('[data-marquee-track]') as HTMLElement;
+          const marqueeWrapper = document.querySelector('[data-marquee-wrapper]') as HTMLElement;
+          const marqueeTrack = marqueeWrapper?.querySelector('[data-marquee-track]') as HTMLElement;
           if (marqueeTrack) {
             marqueeTrack.style.transform = 'translateX(0)';
           }
@@ -284,14 +346,23 @@
       const initializeWithDelay = () => {
         // Use requestAnimationFrame to ensure DOM is fully rendered
         requestAnimationFrame(() => {
+          // #region agent log
+          fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:287',message:'RAF callback - calling initMarquee',data:{readyState:document.readyState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'5'})}).catch(()=>{});
+          // #endregion
           setTimeout(initMarquee, 100);
         });
       };
 
       if (document.readyState === 'loading') {
+        // #region agent log
+        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:292',message:'Document loading - waiting for DOMContentLoaded',data:{readyState:document.readyState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'5'})}).catch(()=>{});
+        // #endregion
         document.addEventListener('DOMContentLoaded', initializeWithDelay);
       } else {
         // DOM is already ready, but wait a bit for Astro hydration
+        // #region agent log
+        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:296',message:'Document ready - calling initializeWithDelay',data:{readyState:document.readyState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'5'})}).catch(()=>{});
+        // #endregion
         initializeWithDelay();
       }
     }
