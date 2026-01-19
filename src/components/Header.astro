@@ -5,14 +5,14 @@
 ---
 
 <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out">
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 h-20 md:h-24 flex items-center justify-between">
     
     <!-- Left: Logo -->
     <div class="flex items-center gap-2">
       <img 
         src="/images/iis-logo-new.png" 
         alt="Indian School Logo" 
-        class="h-7 sm:h-8 w-auto object-contain"
+        class="h-10 sm:h-12 md:h-14 w-auto object-contain"
         loading="eager"
       />
     </div>
@@ -99,10 +99,10 @@
         header?.classList.add('bg-ivory/95', 'backdrop-blur-md', 'border-b', 'border-stone');
         header?.classList.remove('bg-transparent');
         
-        // Change text color to dark
+        // Change text color to saffron with hover effect
         navLinks.forEach(link => {
           link.classList.remove('text-ivory', 'hover:text-ivory/80');
-          link.classList.add('text-ash', 'hover:text-charcoal');
+          link.classList.add('text-saffron', 'hover:text-vermilion');
         });
         
         // Update hamburger icon color
@@ -115,10 +115,10 @@
         header?.classList.remove('bg-ivory/95', 'backdrop-blur-md', 'border-b', 'border-stone');
         header?.classList.add('bg-transparent');
         
-        // Change text color to light
+        // Change text color to light with saffron hover
         navLinks.forEach(link => {
-          link.classList.remove('text-ash', 'hover:text-charcoal');
-          link.classList.add('text-ivory', 'hover:text-ivory/80');
+          link.classList.remove('text-saffron', 'hover:text-vermilion');
+          link.classList.add('text-ivory', 'hover:text-saffron');
         });
         
         // Update hamburger icon color
@@ -199,7 +199,8 @@
   }
   
   .nav-link:hover {
-    color: rgba(250, 247, 242, 0.8); /* ivory/80 */
+    color: #C89B3C; /* saffron */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
   
   /* Hamburger icon visibility */
