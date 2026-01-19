@@ -187,43 +187,39 @@
         // Set initial position
         gsap.set(marqueeTrack, { x: 0 });
 
-        // Store the animation reference
-        let currentAnimation: gsap.core.Tween | null = null;
+        // Animation state
+        let currentX = 0;
+        let isPaused = false;
+        const speed = 0.5; // pixels per frame (adjust for speed: higher = faster)
         
-        // Create continuous scrolling animation that resets seamlessly
-        const startAnimation = () => {
-          // Reset to starting position
-          gsap.set(marqueeTrack, { x: 0 });
-          
-          // Create animation
-          currentAnimation = gsap.to(marqueeTrack, {
-            x: -totalWidth,
-            duration: 20, // 20 seconds for one complete loop
-            ease: 'none', // Linear movement for smooth constant speed
-            onComplete: () => {
-              // When animation completes, instantly reset to 0
-              // Since we have duplicated logos, this creates seamless loop
-              // Then restart the animation
-              startAnimation();
+        // Use GSAP ticker for smooth continuous animation
+        const animation = gsap.ticker.add(() => {
+          if (!isPaused) {
+            // Move continuously from left to right (negative x creates leftward scroll)
+            currentX -= speed;
+            
+            // Reset when we've scrolled one complete set
+            if (Math.abs(currentX) >= totalWidth) {
+              currentX = 0;
             }
-          });
-        };
-
-        // Start the continuous animation
-        startAnimation();
+            
+            // Apply transform
+            gsap.set(marqueeTrack, { x: currentX });
+          }
+        });
 
         // Pause on hover
         marqueeWrapper.addEventListener('mouseenter', () => {
-          if (currentAnimation) currentAnimation.pause();
+          isPaused = true;
         });
 
         // Resume on mouse leave
         marqueeWrapper.addEventListener('mouseleave', () => {
-          if (currentAnimation) currentAnimation.resume();
+          isPaused = false;
         });
 
         // Store reference for potential cleanup
-        (marqueeWrapper as any).__marqueeAnimation = currentAnimation;
+        (marqueeWrapper as any).__marqueeAnimation = animation;
         };
 
         // Initialize after all images load

@@ -5,16 +5,18 @@
 ---
 
 <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out">
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 h-20 md:h-24 flex items-center justify-between">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 md:h-24 flex items-center justify-between">
     
     <!-- Left: Logo -->
     <div class="flex items-center gap-2">
-      <img 
-        src="/images/iis-logo-new.png" 
-        alt="Indian School Logo" 
-        class="h-10 sm:h-12 md:h-14 w-auto object-contain"
-        loading="eager"
-      />
+      <a href="/" class="flex items-center transition-opacity duration-200 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-saffron focus:ring-offset-2 rounded">
+        <img 
+          src="/images/iis-logo-new.png" 
+          alt="Indian School Logo" 
+          class="h-8 sm:h-10 md:h-12 lg:h-14 w-auto object-contain"
+          loading="eager"
+        />
+      </a>
     </div>
 
     <!-- Desktop Nav Links -->
@@ -26,21 +28,21 @@
         <a href="#programs" class="nav-link transition-colors duration-200">Programs</a>
       </li>
       <li>
-        <a href="#contact" class="nav-link transition-colors duration-200">Contact</a>
+        <a href="/contact" class="nav-link transition-colors duration-200">Contact</a>
       </li>
     </ul>
 
     <!-- Mobile Hamburger Button -->
     <button 
       id="mobile-menu-btn"
-      class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-saffron"
+      class="md:hidden w-11 h-11 flex items-center justify-center rounded-lg bg-ivory/10 hover:bg-ivory/20 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-saffron touch-manipulation"
       aria-label="Toggle menu"
       aria-expanded="false"
     >
-      <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-ivory transition-transform duration-300">
+      <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 text-ivory transition-all duration-300">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
       </svg>
-      <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-charcoal hidden transition-transform duration-300">
+      <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 text-charcoal hidden transition-all duration-300">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
@@ -50,13 +52,13 @@
   <!-- Mobile Menu Overlay -->
   <div 
     id="mobile-menu" 
-    class="md:hidden fixed inset-0 bg-charcoal/95 backdrop-blur-lg transform translate-x-full transition-transform duration-300 ease-in-out z-40"
+    class="md:hidden fixed inset-0 bg-gradient-to-br from-charcoal via-charcoal/98 to-charcoal backdrop-blur-xl transform translate-x-full transition-transform duration-500 ease-out z-40"
     aria-hidden="true"
   >
     <!-- Close Button -->
     <button 
       id="mobile-menu-close"
-      class="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-full bg-ivory/10 hover:bg-ivory/20 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-saffron"
+      class="absolute top-4 right-4 w-11 h-11 flex items-center justify-center rounded-full bg-ivory/10 hover:bg-ivory/20 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-saffron z-50"
       aria-label="Close menu"
     >
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 text-ivory">
@@ -64,16 +66,22 @@
       </svg>
     </button>
 
-    <div class="flex flex-col items-center justify-center h-full px-8">
-      <ul class="flex flex-col items-center gap-8 text-center">
-        <li>
-          <a href="#about" class="mobile-nav-link text-2xl font-heading text-ivory hover:text-saffron transition-colors duration-200">About</a>
+    <div class="flex flex-col items-center justify-center h-full px-6 py-20">
+      <ul class="flex flex-col items-center gap-6 w-full max-w-xs">
+        <li class="w-full">
+          <a href="#about" class="mobile-nav-link block text-xl font-heading text-ivory hover:text-saffron transition-all duration-300 py-3 px-4 rounded-lg hover:bg-ivory/5 text-center active:scale-95">
+            About
+          </a>
         </li>
-        <li>
-          <a href="#programs" class="mobile-nav-link text-2xl font-heading text-ivory hover:text-saffron transition-colors duration-200">Programs</a>
+        <li class="w-full">
+          <a href="#programs" class="mobile-nav-link block text-xl font-heading text-ivory hover:text-saffron transition-all duration-300 py-3 px-4 rounded-lg hover:bg-ivory/5 text-center active:scale-95">
+            Programs
+          </a>
         </li>
-        <li>
-          <a href="#contact" class="mobile-nav-link text-2xl font-heading text-ivory hover:text-saffron transition-colors duration-200">Contact</a>
+        <li class="w-full">
+          <a href="/contact" class="mobile-nav-link block text-xl font-heading text-ivory hover:text-saffron transition-all duration-300 py-3 px-4 rounded-lg hover:bg-ivory/5 text-center active:scale-95">
+            Contact
+          </a>
         </li>
       </ul>
     </div>
@@ -99,10 +107,10 @@
         header?.classList.add('bg-ivory/95', 'backdrop-blur-md', 'border-b', 'border-stone');
         header?.classList.remove('bg-transparent');
         
-        // Change text color to saffron with hover effect
+        // Change text color to red with hover effect
         navLinks.forEach(link => {
           link.classList.remove('text-ivory', 'hover:text-ivory/80');
-          link.classList.add('text-saffron', 'hover:text-vermilion');
+          link.classList.add('nav-link-scrolled');
         });
         
         // Update hamburger icon color
@@ -117,7 +125,7 @@
         
         // Change text color to light with saffron hover
         navLinks.forEach(link => {
-          link.classList.remove('text-saffron', 'hover:text-vermilion');
+          link.classList.remove('nav-link-scrolled');
           link.classList.add('text-ivory', 'hover:text-saffron');
         });
         
@@ -187,15 +195,16 @@
 </script>
 
 <style>
-  /* Header background at top */
+  /* Header background at top - transparent */
   #main-header {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
+    background: transparent;
   }
   
   /* Initial state for nav links - white text for transparent header */
   .nav-link {
     color: #FAF7F2; /* ivory */
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    transition: color 0.2s ease;
   }
   
   .nav-link:hover {
@@ -203,9 +212,53 @@
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
   
+  /* Custom color when scrolled */
+  .nav-link-scrolled {
+    color: #811526 !important;
+    text-shadow: none;
+  }
+  
+  .nav-link-scrolled:hover {
+    color: #6B0F1A !important; /* darker shade for hover */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
   /* Hamburger icon visibility */
   #hamburger-icon {
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  }
+  
+  /* Mobile menu improvements */
+  @media (max-width: 768px) {
+    #main-header {
+      backdrop-filter: blur(10px);
+    }
+    
+    #mobile-menu {
+      backdrop-filter: blur(20px);
+    }
+    
+    .mobile-nav-link {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .mobile-nav-link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background: #C89B3C;
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .mobile-nav-link:hover::before,
+    .mobile-nav-link:active::before {
+      transform: scaleY(1);
+    }
   }
 </style>
 

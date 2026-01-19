@@ -22,6 +22,140 @@ const { title = "Indian School - Where Indian Art Becomes a Living Tradition", d
   </head>
   <body>
     <slot />
+    
+    <script>
+      // Smooth scrolling for iOS and Android devices
+      if (typeof window !== 'undefined') {
+        import('lenis').then((LenisModule) => {
+          const Lenis = LenisModule.default;
+          
+          // Detect iOS devices
+          const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+          
+          // Detect Android devices
+          const isAndroid = /Android/.test(navigator.userAgent);
+          
+          // Use Lenis for Android devices
+          if (isAndroid) {
+            // Initialize Lenis smooth scroll for Android
+            const lenis = new Lenis({
+              duration: 1.2,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+              orientation: 'vertical',
+              gestureOrientation: 'vertical',
+              smoothWheel: true,
+              wheelMultiplier: 1,
+              smoothTouch: false,
+              touchMultiplier: 2,
+              infinite: false,
+            });
+            
+            // Get scroll value
+            function raf(time) {
+              lenis.raf(time);
+              requestAnimationFrame(raf);
+            }
+            
+            requestAnimationFrame(raf);
+            
+            // Handle anchor links with Lenis
+            document.addEventListener('click', function(e) {
+              const target = e.target.closest('a[href^="#"]');
+              
+              if (target && target.getAttribute('href') !== '#') {
+                const href = target.getAttribute('href');
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId) || 
+                                     document.querySelector(`[name="${targetId}"]`);
+                
+                if (targetElement) {
+                  e.preventDefault();
+                  
+                  // Calculate offset for fixed header
+                  const headerHeight = 80;
+                  const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                  
+                  // Use Lenis to scroll smoothly
+                  lenis.scrollTo(targetPosition, {
+                    offset: -headerHeight,
+                    duration: 1.2,
+                  });
+                }
+              }
+            });
+            
+            // Handle links with anchors
+            document.addEventListener('click', function(e) {
+              const target = e.target.closest('a[href*="#"]');
+              
+              if (target && target.hostname === window.location.hostname) {
+                const url = new URL(target.href);
+                if (url.hash && url.pathname === window.location.pathname) {
+                  const targetId = url.hash.substring(1);
+                  const targetElement = document.getElementById(targetId) || 
+                                       document.querySelector(`[name="${targetId}"]`);
+                  
+                  if (targetElement) {
+                    e.preventDefault();
+                    
+                    const headerHeight = 80;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    lenis.scrollTo(targetPosition, {
+                      offset: -headerHeight,
+                      duration: 1.2,
+                    });
+                  }
+                }
+              }
+            });
+          } else if (isIOS) {
+            // Keep custom smooth scrolling for iOS
+            document.addEventListener('click', function(e) {
+              const target = e.target.closest('a[href^="#"]');
+              
+              if (target && target.getAttribute('href') !== '#') {
+                const href = target.getAttribute('href');
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId) || 
+                                     document.querySelector(`[name="${targetId}"]`);
+                
+                if (targetElement) {
+                  e.preventDefault();
+                  
+                  const headerHeight = 80;
+                  const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                  
+                  const startPosition = window.pageYOffset;
+                  const distance = targetPosition - startPosition;
+                  const duration = 800;
+                  let start = null;
+                  
+                  function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = timestamp - start;
+                    const percentage = Math.min(progress / duration, 1);
+                    
+                    const ease = percentage < 0.5 
+                      ? 2 * percentage * percentage 
+                      : 1 - Math.pow(-2 * percentage + 2, 2) / 2;
+                    
+                    window.scrollTo(0, startPosition + distance * ease);
+                    
+                    if (progress < duration) {
+                      requestAnimationFrame(step);
+                    }
+                  }
+                  
+                  requestAnimationFrame(step);
+                }
+              }
+            });
+          }
+        });
+      }
+    </script>
   </body>
 </html>
 

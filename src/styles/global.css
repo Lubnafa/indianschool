@@ -8,6 +8,26 @@ html {
   -webkit-text-size-adjust: 100%;
   /* Enable smooth scrolling on iOS */
   -webkit-overflow-scrolling: touch;
+  /* Improve scrolling performance on iOS */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* iOS and Android smooth scrolling support - let JavaScript handle it */
+@supports (-webkit-touch-callout: none) {
+  html {
+    scroll-behavior: auto; /* Let JavaScript handle it on iOS */
+  }
+}
+
+/* Android device detection for smooth scrolling */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  @supports (-webkit-appearance: none) and (not (appearance: none)) {
+    /* Android Chrome and other WebKit-based browsers */
+    html {
+      scroll-behavior: auto; /* Let JavaScript handle it on Android */
+    }
+  }
 }
 
 body {
