@@ -188,37 +188,64 @@
           
           animationInitialized = true;
 
-        // Get total width of first set (5 logos + gaps)
+        // Calculate total width of first set by measuring where duplicate set starts
+        // The 6th logo (index 5) is the start of the duplicate set
+        const firstLogo = logos[0] as HTMLElement;
+        const duplicateStartLogo = logos[5] as HTMLElement; // 6th logo = duplicate of 1st
+        
         let totalWidth = 0;
-        const logoWidths: number[] = [];
-        for (let i = 0; i < 5; i++) {
-          const logo = logos[i] as HTMLElement;
-          if (!logo || !logo.offsetWidth) {
-            console.warn(`Logo at index ${i} is not available or has no width`);
-            // Use a fallback width if element doesn't exist
-            totalWidth += 100; // fallback width
-            logoWidths.push(100);
-          } else {
-            totalWidth += logo.offsetWidth;
-            logoWidths.push(logo.offsetWidth);
+        if (firstLogo && duplicateStartLogo && firstLogo.offsetWidth && duplicateStartLogo.offsetWidth) {
+          // Get actual computed positions relative to track
+          const firstRect = firstLogo.getBoundingClientRect();
+          const duplicateRect = duplicateStartLogo.getBoundingClientRect();
+          const trackRect = marqueeTrack.getBoundingClientRect();
+          
+          // Distance from first logo's left to duplicate logo's left = one complete set width
+          // Use Math.round to avoid subpixel precision issues that can cause visible jumps
+          const firstLeft = firstRect.left - trackRect.left;
+          const duplicateLeft = duplicateRect.left - trackRect.left;
+          totalWidth = Math.round((duplicateLeft - firstLeft) * 100) / 100; // Round to 2 decimal places for stability
+          
+          // #region agent log
+          fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:198',message:'Width calculation by position',data:{totalWidth,firstLeft,duplicateLeft,windowWidth:window.innerWidth},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'7'})}).catch(()=>{});
+          // #endregion
+          
+          // If calculation failed or seems wrong, fall back to sum method
+          if (totalWidth <= 0 || !isFinite(totalWidth) || totalWidth < firstLogo.offsetWidth) {
+            // Sum logo widths
+            for (let i = 0; i < 5; i++) {
+              const logo = logos[i] as HTMLElement;
+              if (logo?.offsetWidth) {
+                totalWidth += logo.offsetWidth;
+              }
+            }
+            // Add gap widths (4 gaps between 5 logos)
+            const computedStyle = window.getComputedStyle(marqueeTrack);
+            const gap = parseFloat(computedStyle.gap) || (window.innerWidth >= 768 ? 80 : 64);
+            totalWidth += gap * 4;
           }
+        } else {
+          // Fallback: sum logo widths and add gaps
+          for (let i = 0; i < 5; i++) {
+            const logo = logos[i] as HTMLElement;
+            if (logo?.offsetWidth) {
+              totalWidth += logo.offsetWidth;
+            }
+          }
+          // Add gap widths (4 gaps between 5 logos)
+          const computedStyle = window.getComputedStyle(marqueeTrack);
+          const gap = parseFloat(computedStyle.gap) || (window.innerWidth >= 768 ? 80 : 64);
+          totalWidth += gap * 4;
         }
         
         // #region agent log
-        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:172',message:'Width calculation',data:{totalWidthBeforeGaps:totalWidth,logoWidths,windowWidth:window.innerWidth},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'7'})}).catch(()=>{});
+        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:233',message:'Final width calculation',data:{totalWidth},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'7'})}).catch(()=>{});
         // #endregion
         
-        // If totalWidth is 0, something went wrong, use fallback
-        if (totalWidth === 0) {
+        // If totalWidth is still 0, something went wrong, use fallback
+        if (totalWidth <= 0) {
           totalWidth = 800; // fallback total width
         }
-
-        // Add gap widths (4 gaps between 5 logos, each 64px on desktop, 80px on md)
-        const gapWidth = window.innerWidth >= 768 ? 80 : 64;
-        totalWidth += gapWidth * 4;
-        // #region agent log
-        fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:181',message:'Final width calculation',data:{totalWidth,gapWidth,gapCount:4},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'7'})}).catch(()=>{});
-        // #endregion
 
         // Set initial position
         gsap.set(marqueeTrack, { x: 0 });
@@ -238,9 +265,27 @@
             // Move continuously leftward for proper marquee effect (content moves right to left)
             currentX -= speed;
             
-            // Seamless loop: when first set exits left, duplicate set enters from right
+            // Seamless infinite loop: wrap when we've scrolled one full set width
+            // This creates continuous infinite scroll where duplicate seamlessly continues from first
+            // The key is to wrap smoothly without any visible jump
             if (currentX <= -totalWidth) {
-              currentX += totalWidth; // Add instead of reset for seamless transition
+              // Store old value before wrap
+              const beforeWrap = currentX;
+              
+              // Wrap back seamlessly - add totalWidth to bring it back into range
+              // The duplicate set at position 0 now appears where first set started
+              currentX = currentX + totalWidth;
+              
+              // Handle edge case where speed might exceed totalWidth in one frame
+              // This shouldn't happen with normal speeds, but ensures stability
+              while (currentX <= -totalWidth) {
+                currentX += totalWidth;
+              }
+              
+              // Log wrap for debugging (every 100 frames to avoid spam)
+              if (Math.random() < 0.01) { // 1% chance per frame
+                fetch('http://127.0.0.1:7245/ingest/8bd62af5-42d0-4dea-96c6-a6b4c977dfa9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PartnersMarquee.astro:275',message:'Wrap executed',data:{beforeWrap,afterWrap:currentX,totalWidth,diff:currentX-beforeWrap},timestamp:Date.now(),sessionId:'debug-session',runId:'wrap-debug',hypothesisId:'7'})}).catch(()=>{});
+              }
             }
             
             // Apply transform (negative X moves content leftward for seamless marquee)
