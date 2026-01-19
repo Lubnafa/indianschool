@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<Layout title="About Us - Coming Soon - Indian Cultural Center">
+  <Header />
+  
+  <!-- Hero Section -->
+  <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat" style="background-image: url('/images/background-drop.png');">
+    
+    <!-- Lotus Pattern Decoration -->
+    <div class="absolute top-20 left-10 w-32 h-32 opacity-10 hidden lg:block">
+      <svg viewBox="0 0 100 100" class="w-full h-full text-saffron">
+        <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20 Z" fill="currentColor" opacity="0.3"/>
+        <circle cx="50" cy="50" r="15" fill="currentColor" opacity="0.5"/>
+      </svg>
+    </div>
+    
+    <div class="absolute bottom-20 right-10 w-24 h-24 opacity-10 hidden lg:block">
+      <svg viewBox="0 0 100 100" class="w-full h-full text-saffron">
+        <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20 Z" fill="currentColor" opacity="0.3"/>
+        <circle cx="50" cy="50" r="15" fill="currentColor" opacity="0.5"/>
+      </svg>
+    </div>
+    
+    <div class="relative z-10 text-center px-4 py-16 sm:py-20">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading text-ivory mb-4 sm:mb-6">
+        <span class="text-saffron">About Us</span>
+      </h1>
+      <p class="text-lg sm:text-xl md:text-2xl text-ivory/80 font-body max-w-2xl mx-auto">
+        Our story of cultural preservation and artistic excellence
+      </p>
+    </div>
+  </section>
+
+  <!-- Coming Soon Section -->
+  <section class="py-20 sm:py-28 md:py-32 lg:py-40 bg-ivory">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      
+      <!-- Decorative Mandala -->
+      <div class="flex justify-center mb-8 sm:mb-12">
+        <div class="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48">
+          <svg viewBox="0 0 100 100" class="w-full h-full text-saffron animate-spin-slow">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+            <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+            <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.5"/>
+            <circle cx="50" cy="50" r="15" fill="currentColor" opacity="0.2"/>
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 sm:w-16 sm:h-16 text-saffron">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coming Soon Text -->
+      <div class="space-y-6 sm:space-y-8">
+        <h2 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading text-charcoal mb-4">
+          Coming Soon
+        </h2>
+        
+        <div class="flex items-center justify-center gap-3 mb-6">
+          <div class="h-px w-16 sm:w-24 bg-gradient-to-r from-transparent via-saffron to-saffron"></div>
+          <div class="w-2 h-2 rounded-full bg-saffron"></div>
+          <div class="h-px w-16 sm:w-24 bg-gradient-to-l from-transparent via-saffron to-saffron"></div>
+        </div>
+        
+        <p class="text-xl sm:text-2xl md:text-3xl text-ash font-body max-w-2xl mx-auto leading-relaxed">
+          We are crafting something beautiful to share our rich heritage and cultural journey with you.
+        </p>
+        
+        <p class="text-base sm:text-lg text-ash/70 font-body max-w-xl mx-auto leading-relaxed">
+          Our About page is under construction. Soon, you'll discover our mission, values, and the dedicated community 
+          that brings Indian culture to life through art, music, and spiritual practices.
+        </p>
+
+        <!-- Indian Blessing Text -->
+        <div class="mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-stone/30">
+          <p class="text-2xl sm:text-3xl md:text-4xl font-heading text-saffron mb-4">
+            धन्यवाद
+          </p>
+          <p class="text-lg sm:text-xl text-ash font-body italic">
+            Thank you for your patience and understanding
+          </p>
+        </div>
+
+        <!-- Back to Home Button -->
+        <div class="mt-10 sm:mt-12">
+          <a 
+            href="/" 
+            class="inline-block px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-saffron to-vermilion text-white font-heading text-lg sm:text-xl rounded-lg hover:shadow-lg hover:scale-[1.02] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-saffron focus:ring-offset-2 touch-manipulation"
+          >
+            Return to Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+  }
+</style>

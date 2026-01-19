@@ -105,10 +105,6 @@
       </div>
     </div>
 
-    <!-- Mobile Scroll Hint -->
-    <p class="text-center text-sm text-charcoal/50 mt-8 md:hidden font-inter">
-      Swipe to view all partners
-    </p>
   </div>
 </section>
 
@@ -190,32 +186,49 @@
         // Animation state
         let currentX = 0;
         let isPaused = false;
-        const speed = 0.5; // pixels per frame (adjust for speed: higher = faster)
+        // Adjust speed based on device for optimal viewing
+        const speed = window.innerWidth >= 768 ? 0.5 : 0.3; // Slower on mobile for better visibility
         
         // Use GSAP ticker for smooth continuous animation
         const animation = gsap.ticker.add(() => {
           if (!isPaused) {
-            // Move continuously from left to right (negative x creates leftward scroll)
+            // Move continuously leftward for proper marquee effect (content moves right to left)
             currentX -= speed;
             
-            // Reset when we've scrolled one complete set
-            if (Math.abs(currentX) >= totalWidth) {
-              currentX = 0;
+            // Seamless loop: when first set exits left, duplicate set enters from right
+            if (currentX <= -totalWidth) {
+              currentX += totalWidth; // Add instead of reset for seamless transition
             }
             
-            // Apply transform
+            // Apply transform (negative X moves content leftward for seamless marquee)
             gsap.set(marqueeTrack, { x: currentX });
           }
         });
 
-        // Pause on hover
-        marqueeWrapper.addEventListener('mouseenter', () => {
-          isPaused = true;
-        });
+        // Pause on hover (desktop only)
+        if (window.innerWidth >= 768) {
+          marqueeWrapper.addEventListener('mouseenter', () => {
+            isPaused = true;
+          });
 
-        // Resume on mouse leave
-        marqueeWrapper.addEventListener('mouseleave', () => {
-          isPaused = false;
+          // Resume on mouse leave
+          marqueeWrapper.addEventListener('mouseleave', () => {
+            isPaused = false;
+          });
+        }
+        
+        // Pause on touch (mobile) - pause when user touches the marquee
+        let touchTimeout: NodeJS.Timeout | null = null;
+        marqueeWrapper.addEventListener('touchstart', () => {
+          isPaused = true;
+          if (touchTimeout) clearTimeout(touchTimeout);
+        });
+        
+        marqueeWrapper.addEventListener('touchend', () => {
+          // Resume after a short delay
+          touchTimeout = setTimeout(() => {
+            isPaused = false;
+          }, 500);
         });
 
         // Store reference for potential cleanup
@@ -258,16 +271,10 @@
           }, 1000);
         }
       } else {
-          // Fallback for reduced motion: enable horizontal scroll
-          const marqueeWrapper = document.querySelector('[data-marquee-wrapper]') as HTMLElement;
-          if (marqueeWrapper) {
-            marqueeWrapper.style.overflowX = 'auto';
-            marqueeWrapper.style.scrollSnapType = 'x mandatory';
-            
-            const logos = marqueeWrapper.querySelectorAll('.logo-item');
-            logos.forEach((logo) => {
-              (logo as HTMLElement).style.scrollSnapAlign = 'start';
-            });
+          // Fallback for reduced motion: show static logos
+          const marqueeTrack = document.querySelector('[data-marquee-track]') as HTMLElement;
+          if (marqueeTrack) {
+            marqueeTrack.style.transform = 'translateX(0)';
           }
         }
       };
@@ -300,6 +307,7 @@
   /* Smooth transforms */
   .marquee-track {
     will-change: transform;
+    white-space: nowrap; /* Prevent wrapping during animation */
   }
 
   /* Logo items */
@@ -314,21 +322,15 @@
     image-rendering: crisp-edges;
   }
 
-  /* Mobile: horizontal scroll */
+  /* Ensure marquee works on all devices */
   @media (max-width: 768px) {
     .marquee-wrapper {
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
+      overflow: hidden; /* Keep hidden on mobile for auto-scroll */
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; /* Firefox */
     }
-
-    .marquee-wrapper::-webkit-scrollbar {
-      display: none; /* Chrome, Safari */
-    }
-
-    .logo-item {
-      scroll-snap-align: start;
+    
+    .marquee-track {
+      white-space: nowrap; /* Prevent wrapping on mobile */
     }
   }
 </style>
