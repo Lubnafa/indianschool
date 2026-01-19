@@ -115,29 +115,71 @@
 <script>
   import { gsap } from 'gsap';
 
-  // Check for reduced motion preference
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Wait for DOM to be ready
+  if (typeof window !== 'undefined') {
+    const initMarquee = (isRetry = false) => {
+      // Check for reduced motion preference
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (!prefersReducedMotion) {
-    const marqueeWrapper = document.querySelector('[data-marquee-wrapper]') as HTMLElement;
-    const marqueeTrack = document.querySelector('[data-marquee-track]') as HTMLElement;
+      if (!prefersReducedMotion) {
+        const marqueeWrapper = document.querySelector('[data-marquee-wrapper]') as HTMLElement;
+        const marqueeTrack = document.querySelector('[data-marquee-track]') as HTMLElement;
 
-    if (marqueeWrapper && marqueeTrack) {
-      // Calculate the width of one complete set of logos (5 logos)
-      const logos = marqueeTrack.querySelectorAll('.logo-item');
-      const firstLogo = logos[0] as HTMLElement;
-      
-      // Wait for images to load to get accurate width
-      const images = marqueeTrack.querySelectorAll('img');
-      let loadedCount = 0;
-      
-      const initAnimation = () => {
+        if (!marqueeWrapper || !marqueeTrack) {
+          return;
+        }
+
+        // Calculate the width of one complete set of logos (5 logos)
+        const logos = marqueeTrack.querySelectorAll('.logo-item');
+        
+        if (logos.length === 0) {
+          // Only warn and retry once if this is the first attempt
+          if (!isRetry) {
+            // Retry after a short delay to allow Astro hydration to complete
+            setTimeout(() => {
+              initMarquee(true);
+            }, 300);
+          } else if (import.meta.env.DEV) {
+            console.warn('No logo items found in marquee track. Marquee animation disabled.');
+          }
+          return;
+        }
+        
+        // Wait for images to load to get accurate width
+        const images = marqueeTrack.querySelectorAll('img');
+        let loadedCount = 0;
+        let animationInitialized = false;
+        
+        const initAnimation = () => {
+          // Prevent multiple initializations
+          if (animationInitialized) return;
+          
+          // Verify we have at least 5 logos (one complete set)
+          if (logos.length < 5) {
+            console.warn('Not enough logo items found for marquee animation');
+            return;
+          }
+          
+          animationInitialized = true;
+
         // Get total width of first set (5 logos + gaps)
         let totalWidth = 0;
         for (let i = 0; i < 5; i++) {
           const logo = logos[i] as HTMLElement;
-          totalWidth += logo.offsetWidth;
+          if (!logo || !logo.offsetWidth) {
+            console.warn(`Logo at index ${i} is not available or has no width`);
+            // Use a fallback width if element doesn't exist
+            totalWidth += 100; // fallback width
+          } else {
+            totalWidth += logo.offsetWidth;
+          }
         }
+        
+        // If totalWidth is 0, something went wrong, use fallback
+        if (totalWidth === 0) {
+          totalWidth = 800; // fallback total width
+        }
+
         // Add gap widths (4 gaps between 5 logos, each 64px on desktop, 80px on md)
         const gapWidth = window.innerWidth >= 768 ? 80 : 64;
         totalWidth += gapWidth * 4;
@@ -145,66 +187,111 @@
         // Set initial position
         gsap.set(marqueeTrack, { x: 0 });
 
-        // Create infinite scrolling animation
-        const animation = gsap.to(marqueeTrack, {
-          x: -totalWidth,
-          duration: 20, // 20 seconds for one complete loop
-          ease: 'none', // Linear movement for smooth constant speed
-          repeat: -1, // Infinite loop
-          onRepeat: () => {
-            // Reset to start position for seamless loop
-            gsap.set(marqueeTrack, { x: 0 });
-          }
-        });
+        // Store the animation reference
+        let currentAnimation: gsap.core.Tween | null = null;
+        
+        // Create continuous scrolling animation that resets seamlessly
+        const startAnimation = () => {
+          // Reset to starting position
+          gsap.set(marqueeTrack, { x: 0 });
+          
+          // Create animation
+          currentAnimation = gsap.to(marqueeTrack, {
+            x: -totalWidth,
+            duration: 20, // 20 seconds for one complete loop
+            ease: 'none', // Linear movement for smooth constant speed
+            onComplete: () => {
+              // When animation completes, instantly reset to 0
+              // Since we have duplicated logos, this creates seamless loop
+              // Then restart the animation
+              startAnimation();
+            }
+          });
+        };
+
+        // Start the continuous animation
+        startAnimation();
 
         // Pause on hover
         marqueeWrapper.addEventListener('mouseenter', () => {
-          animation.pause();
+          if (currentAnimation) currentAnimation.pause();
         });
 
         // Resume on mouse leave
         marqueeWrapper.addEventListener('mouseleave', () => {
-          animation.resume();
+          if (currentAnimation) currentAnimation.resume();
+        });
+
+        // Store reference for potential cleanup
+        (marqueeWrapper as any).__marqueeAnimation = currentAnimation;
+        };
+
+        // Initialize after all images load
+        if (images.length === 0) {
+          // No images, initialize immediately
+          initAnimation();
+        } else {
+          images.forEach((img) => {
+            if (img.complete && img.naturalWidth > 0) {
+              loadedCount++;
+              if (loadedCount === images.length && !animationInitialized) {
+                initAnimation();
+              }
+            } else {
+              img.addEventListener('load', () => {
+                loadedCount++;
+                if (loadedCount === images.length && !animationInitialized) {
+                  initAnimation();
+                }
+              });
+              // Handle error case
+              img.addEventListener('error', () => {
+                loadedCount++;
+                if (loadedCount === images.length && !animationInitialized) {
+                  initAnimation();
+                }
+              });
+            }
+          });
+
+          // Fallback: init after 1 second if images don't load
+          setTimeout(() => {
+            if (!animationInitialized) {
+              initAnimation();
+            }
+          }, 1000);
+        }
+      } else {
+          // Fallback for reduced motion: enable horizontal scroll
+          const marqueeWrapper = document.querySelector('[data-marquee-wrapper]') as HTMLElement;
+          if (marqueeWrapper) {
+            marqueeWrapper.style.overflowX = 'auto';
+            marqueeWrapper.style.scrollSnapType = 'x mandatory';
+            
+            const logos = marqueeWrapper.querySelectorAll('.logo-item');
+            logos.forEach((logo) => {
+              (logo as HTMLElement).style.scrollSnapAlign = 'start';
+            });
+          }
+        }
+      };
+
+      // Initialize when DOM is ready
+      // Add a small delay to ensure Astro hydration is complete
+      const initializeWithDelay = () => {
+        // Use requestAnimationFrame to ensure DOM is fully rendered
+        requestAnimationFrame(() => {
+          setTimeout(initMarquee, 100);
         });
       };
 
-      // Initialize after all images load
-      images.forEach((img) => {
-        if (img.complete) {
-          loadedCount++;
-          if (loadedCount === images.length) {
-            initAnimation();
-          }
-        } else {
-          img.addEventListener('load', () => {
-            loadedCount++;
-            if (loadedCount === images.length) {
-              initAnimation();
-            }
-          });
-        }
-      });
-
-      // Fallback: init after 500ms if images don't load
-      setTimeout(() => {
-        if (loadedCount < images.length) {
-          initAnimation();
-        }
-      }, 500);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeWithDelay);
+      } else {
+        // DOM is already ready, but wait a bit for Astro hydration
+        initializeWithDelay();
+      }
     }
-  } else {
-    // Fallback for reduced motion: enable horizontal scroll
-    const marqueeWrapper = document.querySelector('[data-marquee-wrapper]') as HTMLElement;
-    if (marqueeWrapper) {
-      marqueeWrapper.style.overflowX = 'auto';
-      marqueeWrapper.style.scrollSnapType = 'x mandatory';
-      
-      const logos = marqueeWrapper.querySelectorAll('.logo-item');
-      logos.forEach((logo) => {
-        (logo as HTMLElement).style.scrollSnapAlign = 'start';
-      });
-    }
-  }
 </script>
 
 <style>

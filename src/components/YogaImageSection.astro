@@ -1,0 +1,43 @@
+---
+// YogaImageSection.astro
+// Full-width image section showcasing yoga class
+---
+
+<section class="yoga-image-section bg-ivory py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
+  <div class="container mx-auto px-4 sm:px-6">
+    <!-- Section Header -->
+    <div class="text-center mb-10 sm:mb-12 md:mb-16">
+      <p class="text-xs sm:text-sm uppercase tracking-widest text-saffron mb-2 sm:mb-3 font-inter">
+        HEALTHY LIVING
+      </p>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-playfair text-[#811526] mb-3 sm:mb-4">
+        A mindful space to reconnect with yourself
+      </h2>
+      <p class="text-base sm:text-lg text-charcoal/70 font-inter max-w-2xl mx-auto px-4">
+        We help you reconnect with your body and mind through mindful, accessible yoga sessions.
+      </p>
+    </div>
+
+    <!-- Centered Image with Borders -->
+    <div class="w-full flex justify-center px-4 sm:px-6 md:px-8 lg:px-12">
+      <img 
+        src="/images/yoga_class.png" 
+        alt="Yoga class in session - traditional practice for balance, strength, and mindful living"
+        class="w-full max-w-full h-auto object-cover rounded-lg shadow-lg"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .yoga-image-section {
+    display: block;
+  }
+  
+  .yoga-image-section img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>
