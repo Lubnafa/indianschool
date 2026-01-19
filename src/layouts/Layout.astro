@@ -31,7 +31,7 @@ const { title = "Indian School - Where Indian Art Becomes a Living Tradition", d
         });
       }
       
-      // Smooth scrolling for iOS and Android devices
+      // Smooth scrolling with Lenis for desktop, Android, and iOS
       if (typeof window !== 'undefined') {
         import('lenis').then((LenisModule) => {
           const Lenis = LenisModule.default;
@@ -43,17 +43,20 @@ const { title = "Indian School - Where Indian Art Becomes a Living Tradition", d
           // Detect Android devices
           const isAndroid = /Android/.test(navigator.userAgent);
           
-          // Use Lenis for Android devices
-          if (isAndroid) {
-            // Initialize Lenis smooth scroll for Android
+          // Detect desktop (not mobile/tablet)
+          const isDesktop = !isIOS && !isAndroid;
+          
+          // Use Lenis for desktop and Android devices
+          if (isDesktop || isAndroid) {
+            // Initialize Lenis smooth scroll for desktop and Android
             const lenis = new Lenis({
               duration: 1.2,
               easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
               orientation: 'vertical',
               gestureOrientation: 'vertical',
               smoothWheel: true,
-              wheelMultiplier: 1,
-              smoothTouch: false,
+              wheelMultiplier: isDesktop ? 1 : 1,
+              smoothTouch: isAndroid,
               touchMultiplier: 2,
               infinite: false,
             });

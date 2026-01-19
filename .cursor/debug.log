@@ -1365,3 +1365,4 @@
 {"location":"PartnersMarquee.astro:119","message":"Reduced motion check","data":{"prefersReducedMotion":false},"timestamp":1768799602458,"sessionId":"debug-session","runId":"run1","hypothesisId":"4"}
 {"location":"PartnersMarquee.astro:122","message":"QuerySelector results","data":{"wrapperFound":false,"trackFound":false},"timestamp":1768799602458,"sessionId":"debug-session","runId":"run1","hypothesisId":"1"}
 {"location":"PartnersMarquee.astro:125","message":"Early return - elements not found","data":{"wrapperFound":false,"trackFound":false},"timestamp":1768799602458,"sessionId":"debug-session","runId":"run1","hypothesisId":"1"}
+{"location":"PartnersMarquee.astro:287","message":"RAF callback - calling initMarquee","data":{"readyState":"complete"},"timestamp":1768799648860,"sessionId":"debug-session","runId":"run1","hypothesisId":"5"}
